@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Drawings Carousel</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+  <div class="container my-4">
+    <h1 class="text-center">My Drawings Carousel</h1>
+    <div id="drawingsCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner" id="carousel-inner">
+        <!-- Drawings will appear here -->
+      </div>
+      <a class="carousel-control-prev" href="#drawingsCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#drawingsCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+    </div>
+    <div class="my-3">
+      <input type="file" id="fileInput" accept="image/*" multiple />
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      const files = event.target.files;
+      const carouselInner = document.getElementById('carousel-inner');
+      
+      Array.from(files).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'carousel-item' + (index === 0 ? ' active' : '');
+          
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.className = 'd-block w-100';
+          img.style.height = '500px';
+          
+          itemDiv.appendChild(img);
+          carouselInner.appendChild(itemDiv);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  </script>
+</body>
+</html>
